@@ -1,25 +1,9 @@
-import { useState, useEffect, useRef } from "react";
+import { useRef, useEffect } from "react";
+import profilePic from "./assets/profile.jpg"; // replace with your actual asset path
 
 export default function App() {
-  const [profilePic, setProfilePic] = useState(null);
   const canvasRef = useRef(null);
-
-  useEffect(() => {
-    const savedPic = localStorage.getItem("profilePic");
-    if (savedPic) setProfilePic(savedPic);
-  }, []);
-
-  const handleImageUpload = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setProfilePic(reader.result);
-        localStorage.setItem("profilePic", reader.result);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
+  const containerRef = useRef(null);
 
   // Connect-the-dots canvas animation
   useEffect(() => {
@@ -53,7 +37,7 @@ export default function App() {
           const dy = dots[i].y - dots[j].y;
           const dist = Math.sqrt(dx * dx + dy * dy);
           if (dist < 100) {
-            ctx.strokeStyle = `rgba(0,255,255,${1 - dist/100})`;
+            ctx.strokeStyle = `rgba(0,255,255,${1 - dist / 100})`;
             ctx.lineWidth = 0.5;
             ctx.beginPath();
             ctx.moveTo(dots[i].x, dots[i].y);
@@ -77,18 +61,22 @@ export default function App() {
     animate();
 
     const handleResize = () => {
-      width = canvas.width = canvas.offsetWidth;
-      height = canvas.height = canvas.offsetHeight;
+      if (containerRef.current) {
+        width = canvas.width = containerRef.current.offsetWidth;
+        height = canvas.height = containerRef.current.offsetHeight;
+      }
     };
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   return (
-    <div className="relative min-h-screen bg-cyan-900 flex justify-center items-start py-100">
+    <div className="relative min-h-screen bg-gray-900 flex justify-center items-start py-100">
       {/* Glowing Black Glass Container */}
-      <div className="relative w-full max-w-6xl p-8 space-y-10 bg-black/50 backdrop-blur-lg rounded-3xl border border-cyan-400/30 shadow-inner-glow overflow-hidden">
-
+      <div
+        ref={containerRef}
+        className="relative w-full max-w-6xl p-8 space-y-10 bg-black/50 backdrop-blur-lg rounded-3xl border border-cyan-400/30 shadow-inner-glow overflow-hidden"
+      >
         {/* Connect-the-dots canvas */}
         <canvas
           ref={canvasRef}
@@ -107,28 +95,11 @@ export default function App() {
 
         {/* Hero Section */}
         <section className="relative flex flex-col items-center text-center space-y-4 z-10">
-          <div className="relative group">
-            {profilePic ? (
-              <img
-                src={profilePic}
-                alt="Profile"
-                className="w-40 h-40 object-cover rounded-full border-4 border-cyan-400 shadow-xl transform transition duration-500 group-hover:scale-110 cursor-pointer"
-                onClick={() => document.querySelector("#fileInput").click()}
-              />
-            ) : (
-              <div
-                className="w-40 h-40 flex items-center justify-center rounded-full bg-gray-800 text-cyan-400 font-semibold shadow-xl cursor-pointer"
-                onClick={() => document.querySelector("#fileInput").click()}
-              >
-                Upload
-              </div>
-            )}
-            <input
-              id="fileInput"
-              type="file"
-              accept="image/*"
-              onChange={handleImageUpload}
-              className="hidden"
+          <div className="relative">
+            <img
+              src={profilePic}
+              alt="Profile"
+              className="w-40 h-40 object-cover rounded-full border-4 border-cyan-400 shadow-xl transform transition duration-500 hover:scale-110"
             />
           </div>
 
