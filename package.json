@@ -20,8 +20,3 @@
     "vite": "^4.4.9"
   }
 }
-"devDependencies": {
-  "tailwindcss": "^3.x.x",
-  "postcss": "^8.x.x",
-  "autoprefixer": "^10.x.x"
-}
