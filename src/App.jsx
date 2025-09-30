@@ -123,13 +123,7 @@ export default function App() {
                 Upload
               </div>
             )}
-            <input
-              id="fileInput"
-              type="file"
-              accept="image/*"
-              onChange={handleImageUpload}
-              className="hidden"
-            />
+           
           </div>
 
           <h2 className="text-4xl md:text-5xl font-extrabold drop-shadow-lg text-cyan-300">
