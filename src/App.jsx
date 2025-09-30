@@ -1,9 +1,14 @@
-import { useRef, useEffect } from "react";
-import profilePic from "./assets/profile.jpg"; // replace with your actual asset path
+import { useState, useEffect, useRef } from "react";
+import emailjs from "@emailjs/browser";
 
 export default function App() {
+  const [showModal, setShowModal] = useState(false);
   const canvasRef = useRef(null);
-  const containerRef = useRef(null);
+
+  // Fixed profile picture asset
+  const profilePic = "src/assets/profile.jpg"; // place your image in public folder
+
+  const formRef = useRef();
 
   // Connect-the-dots canvas animation
   useEffect(() => {
@@ -61,22 +66,39 @@ export default function App() {
     animate();
 
     const handleResize = () => {
-      if (containerRef.current) {
-        width = canvas.width = containerRef.current.offsetWidth;
-        height = canvas.height = containerRef.current.offsetHeight;
-      }
+      width = canvas.width = canvas.offsetWidth;
+      height = canvas.height = canvas.offsetHeight;
     };
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    emailjs
+      .sendForm(
+        "service_28ux4dv",
+        "template_qka9vgi",
+        formRef.current,
+        "8-HWPzBhXz90OwIci"
+      )
+      .then(
+        () => {
+          alert("Message sent!");
+          setShowModal(false);
+        },
+        (error) => {
+          alert("Failed to send message, please try again.");
+          console.error(error.text);
+        }
+      );
+  };
+
   return (
-    <div className="relative min-h-screen bg-gray-900 flex justify-center items-start py-100">
+    <div className="relative min-h-screen bg-cyan-900 flex justify-center items-start py-20">
       {/* Glowing Black Glass Container */}
-      <div
-        ref={containerRef}
-        className="relative w-full max-w-6xl p-8 space-y-10 bg-black/50 backdrop-blur-lg rounded-3xl border border-cyan-400/30 shadow-inner-glow overflow-hidden"
-      >
+      <div className="relative w-full max-w-6xl p-8 space-y-10 bg-black/50 backdrop-blur-lg rounded-3xl border border-cyan-400/30 shadow-inner-glow overflow-hidden">
+
         {/* Connect-the-dots canvas */}
         <canvas
           ref={canvasRef}
@@ -95,21 +117,17 @@ export default function App() {
 
         {/* Hero Section */}
         <section className="relative flex flex-col items-center text-center space-y-4 z-10">
-          <div className="relative">
-            <img
-              src={profilePic}
-              alt="Profile"
-              className="w-40 h-40 object-cover rounded-full border-4 border-cyan-400 shadow-xl transform transition duration-500 hover:scale-110"
-            />
-          </div>
-
+          <img
+            src={profilePic}
+            alt="Profile"
+            className="w-40 h-40 object-cover rounded-full border-4 border-cyan-400 shadow-xl transform transition duration-500 hover:scale-110"
+          />
           <h2 className="text-4xl md:text-5xl font-extrabold drop-shadow-lg text-cyan-300">
             Hello, I'm Aaron Ace 👋
           </h2>
           <p className="max-w-2xl text-gray-200 drop-shadow-md">
             A passionate developer building modern web apps with Node.js, React, Tailwind CSS, PHP, and MySQL.
           </p>
-
           <a
             href="/resume.pdf"
             download
@@ -168,13 +186,56 @@ export default function App() {
         <section id="contact" className="relative text-center p-8 bg-black/30 border border-cyan-400 rounded-2xl shadow-inner-glow z-10">
           <h3 className="text-2xl md:text-3xl font-bold mb-4 text-cyan-300">Get in Touch</h3>
           <p className="text-gray-200 mb-4">Let’s collaborate on exciting projects 🚀</p>
-          <a
-            href="mailto:youremail@example.com"
+          <button
             className="px-6 py-3 bg-cyan-400 text-black rounded-lg shadow hover:bg-cyan-500 transition"
+            onClick={() => setShowModal(true)}
           >
             Contact Me
-          </a>
+          </button>
         </section>
+
+        {/* Modal */}
+        {showModal && (
+          <div className="fixed inset-0 flex items-center justify-center bg-black/70 z-50">
+            <div className="bg-black/80 backdrop-blur-md rounded-2xl p-6 w-80 text-white shadow-lg relative">
+              <button
+                className="absolute top-2 right-2 text-gray-400 hover:text-white"
+                onClick={() => setShowModal(false)}
+              >
+                ✖
+              </button>
+              <h3 className="text-xl font-bold mb-4">Send a Message</h3>
+              <form ref={formRef} onSubmit={handleSubmit} className="flex flex-col gap-3">
+                <input
+                  type="text"
+                  name="user_name"
+                  placeholder="Your Name"
+                  className="p-2 rounded bg-gray-900 text-white border border-cyan-400"
+                  required
+                />
+                <input
+                  type="email"
+                  name="user_email"
+                  placeholder="Your Email"
+                  className="p-2 rounded bg-gray-900 text-white border border-cyan-400"
+                  required
+                />
+                <textarea
+                  name="message"
+                  placeholder="Your Message"
+                  className="p-2 rounded bg-gray-900 text-white border border-cyan-400"
+                  required
+                />
+                <button
+                  type="submit"
+                  className="mt-2 px-4 py-2 bg-cyan-400 text-black rounded-lg hover:bg-cyan-500 transition"
+                >
+                  Send
+                </button>
+              </form>
+            </div>
+          </div>
+        )}
 
         {/* Footer */}
         <footer className="relative py-4 text-center bg-black/40 border-t border-cyan-400 text-gray-300 rounded-b-2xl shadow-inner-glow z-10">
