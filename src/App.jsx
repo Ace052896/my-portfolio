@@ -5,8 +5,8 @@ export default function App() {
   const [showModal, setShowModal] = useState(false);
   const canvasRef = useRef(null);
 
-  // Fixed profile picture asset
-  const profilePic = "/profile.jpg"; // place your image in public folder
+  // Fixed profile picture asset (put profile.jpg inside "public" folder)
+  const profilePic = "/profile.jpg";
 
   const formRef = useRef();
 
@@ -14,8 +14,8 @@ export default function App() {
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
-    let width = canvas.width = canvas.offsetWidth;
-    let height = canvas.height = canvas.offsetHeight;
+    let width = (canvas.width = canvas.offsetWidth);
+    let height = (canvas.height = canvas.offsetHeight);
 
     const dots = Array.from({ length: 50 }, () => ({
       x: Math.random() * width,
@@ -28,7 +28,7 @@ export default function App() {
       ctx.clearRect(0, 0, width, height);
 
       // Move dots
-      dots.forEach(d => {
+      dots.forEach((d) => {
         d.x += d.vx;
         d.y += d.vy;
         if (d.x < 0 || d.x > width) d.vx *= -1;
@@ -53,7 +53,7 @@ export default function App() {
       }
 
       // Draw dots
-      dots.forEach(d => {
+      dots.forEach((d) => {
         ctx.fillStyle = "cyan";
         ctx.beginPath();
         ctx.arc(d.x, d.y, 2, 0, Math.PI * 2);
@@ -98,7 +98,6 @@ export default function App() {
     <div className="relative min-h-screen bg-cyan-900 flex justify-center items-start py-5">
       {/* Glowing Black Glass Container */}
       <div className="relative w-full max-w-6xl p-8 space-y-10 bg-black/50 backdrop-blur-lg rounded-3xl border border-cyan-400/30 shadow-inner-glow overflow-hidden">
-
         {/* Connect-the-dots canvas */}
         <canvas
           ref={canvasRef}
@@ -107,11 +106,25 @@ export default function App() {
 
         {/* Navbar */}
         <nav className="relative flex justify-between items-center p-4 z-10">
-          <h1 className="text-2xl font-bold text-cyan-300 drop-shadow-lg">My Portfolio</h1>
+          <h1 className="text-2xl font-bold text-cyan-300 drop-shadow-lg">
+            My Portfolio
+          </h1>
           <ul className="flex gap-6 text-gray-200 font-semibold">
-            <li><a href="#about" className="hover:text-cyan-400 transition">About</a></li>
-            <li><a href="#projects" className="hover:text-cyan-400 transition">Projects</a></li>
-            <li><a href="#contact" className="hover:text-cyan-400 transition">Contact</a></li>
+            <li>
+              <a href="#about" className="hover:text-cyan-400 transition">
+                About
+              </a>
+            </li>
+            <li>
+              <a href="#projects" className="hover:text-cyan-400 transition">
+                Projects
+              </a>
+            </li>
+            <li>
+              <a href="#contact" className="hover:text-cyan-400 transition">
+                Contact
+              </a>
+            </li>
           </ul>
         </nav>
 
@@ -126,7 +139,8 @@ export default function App() {
             Hello, I'm Aaron Ace 👋
           </h2>
           <p className="max-w-2xl text-gray-200 drop-shadow-md">
-            A passionate developer building modern web apps with Node.js, React, Tailwind CSS, PHP, and MySQL.
+            A passionate developer building modern web apps with Node.js, React,
+            Tailwind CSS, PHP, and MySQL.
           </p>
           <a
             href="/resume.pdf"
@@ -138,20 +152,39 @@ export default function App() {
         </section>
 
         {/* About Section */}
-        <section id="about" className="relative text-center p-8 bg-black/30 border border-cyan-400 rounded-2xl shadow-inner-glow z-10">
-          <h3 className="text-2xl md:text-3xl font-bold mb-4 text-cyan-300">About Me</h3>
+        <section
+          id="about"
+          className="relative text-center p-8 bg-black/30 border border-cyan-400 rounded-2xl shadow-inner-glow z-10"
+        >
+          <h3 className="text-2xl md:text-3xl font-bold mb-4 text-cyan-300">
+            About Me
+          </h3>
           <p className="text-gray-200">
-            I’m a web developer with 5 years of experience in data entry, procurement support, and web development (Node.js, React, Tailwind CSS, PHP, MySQL, HTML, CSS), while providing efficient virtual assistance and administrative support. Currently focused on creating responsive web apps using modern stacks.
+            I’m a web developer with 5 years of experience in data entry,
+            procurement support, and web development (Node.js, React, Tailwind
+            CSS, PHP, MySQL, HTML, CSS), while providing efficient virtual
+            assistance and administrative support. Currently focused on creating
+            responsive web apps using modern stacks.
           </p>
         </section>
 
         {/* Projects Section */}
-        <section id="projects" className="relative p-8 bg-black/30 border border-cyan-400 rounded-2xl shadow-inner-glow z-10">
-          <h3 className="text-2xl md:text-3xl font-bold mb-6 text-cyan-300 text-center">Projects</h3>
+        <section
+          id="projects"
+          className="relative p-8 bg-black/30 border border-cyan-400 rounded-2xl shadow-inner-glow z-10"
+        >
+          <h3 className="text-2xl md:text-3xl font-bold mb-6 text-cyan-300 text-center">
+            Projects
+          </h3>
           <div className="grid md:grid-cols-3 gap-6">
             <div className="p-6 bg-black/20 border border-cyan-400 backdrop-blur-md rounded-xl shadow-inner-glow transition transform hover:scale-105">
-              <h4 className="font-semibold text-xl mb-2 text-cyan-300">QuickShop</h4>
-              <p className="text-gray-200">An e-commerce app with sorting, pagination, and admin dashboard features. Using PHP / HTML and MySQL.</p>
+              <h4 className="font-semibold text-xl mb-2 text-cyan-300">
+                QuickShop
+              </h4>
+              <p className="text-gray-200">
+                An e-commerce app with sorting, pagination, and admin dashboard
+                features. Using PHP / HTML and MySQL.
+              </p>
               <a
                 href="http://localhost/quickshop/index1.php"
                 target="_blank"
@@ -163,8 +196,13 @@ export default function App() {
             </div>
 
             <div className="p-6 bg-black/20 border border-cyan-400 backdrop-blur-md rounded-xl shadow-inner-glow transition transform hover:scale-105">
-              <h4 className="font-semibold text-xl mb-2 text-cyan-300">Friendster Clone</h4>
-              <p className="text-gray-200">A social app prototype with profiles, posts, and photo uploads using PHP / HTML and MySQL.</p>
+              <h4 className="font-semibold text-xl mb-2 text-cyan-300">
+                Friendster Clone
+              </h4>
+              <p className="text-gray-200">
+                A social app prototype with profiles, posts, and photo uploads
+                using PHP / HTML and MySQL.
+              </p>
               <a
                 href="http://localhost/animated-login-register/index.php"
                 target="_blank"
@@ -176,16 +214,28 @@ export default function App() {
             </div>
 
             <div className="p-6 bg-black/20 border border-cyan-400 backdrop-blur-md rounded-xl shadow-inner-glow transition transform hover:scale-105">
-              <h4 className="font-semibold text-xl mb-2 text-cyan-300">Portfolio Website</h4>
-              <p className="text-gray-200">The site you’re viewing right now, built with React + Tailwind + Vite!</p>
+              <h4 className="font-semibold text-xl mb-2 text-cyan-300">
+                Portfolio Website
+              </h4>
+              <p className="text-gray-200">
+                The site you’re viewing right now, built with React + Tailwind +
+                Vite!
+              </p>
             </div>
           </div>
         </section>
 
         {/* Contact Section */}
-        <section id="contact" className="relative text-center p-8 bg-black/30 border border-cyan-400 rounded-2xl shadow-inner-glow z-10">
-          <h3 className="text-2xl md:text-3xl font-bold mb-4 text-cyan-300">Get in Touch</h3>
-          <p className="text-gray-200 mb-4">Let’s collaborate on exciting projects 🚀</p>
+        <section
+          id="contact"
+          className="relative text-center p-8 bg-black/30 border border-cyan-400 rounded-2xl shadow-inner-glow z-10"
+        >
+          <h3 className="text-2xl md:text-3xl font-bold mb-4 text-cyan-300">
+            Get in Touch
+          </h3>
+          <p className="text-gray-200 mb-4">
+            Let’s collaborate on exciting projects 🚀
+          </p>
           <button
             className="px-6 py-3 bg-cyan-400 text-black rounded-lg shadow hover:bg-cyan-500 transition"
             onClick={() => setShowModal(true)}
@@ -205,7 +255,11 @@ export default function App() {
                 ✖
               </button>
               <h3 className="text-xl font-bold mb-4">Send a Message</h3>
-              <form ref={formRef} onSubmit={handleSubmit} className="flex flex-col gap-3">
+              <form
+                ref={formRef}
+                onSubmit={handleSubmit}
+                className="flex flex-col gap-3"
+              >
                 <input
                   type="text"
                   name="user_name"
