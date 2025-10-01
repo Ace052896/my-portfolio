@@ -186,7 +186,7 @@ export default function App() {
                 features. Using PHP / HTML and MySQL.
               </p>
               <a
-                href="http://localhost/quickshop/index1.php"
+                href="http://quickshop.infinityfree.me"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-4 inline-block px-4 py-2 bg-cyan-400 text-black rounded-lg hover:bg-cyan-500 font-semibold text-sm transition"
