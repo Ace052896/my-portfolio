@@ -6,7 +6,7 @@ export default function App() {
   const canvasRef = useRef(null);
 
   // Fixed profile picture asset
-  const profilePic = "src/assets/profile.jpg"; // place your image in public folder
+  const profilePic = "/profile.jpg"; // place your image in public folder
 
   const formRef = useRef();
 
